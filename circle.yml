@@ -1,0 +1,16 @@
+machine:
+  php:
+    version: 7.0.4
+  hosts:
+    localhost: 127.0.0.1
+  environment:
+    REMOTE_REPOSITORY: ssh://PANTHEON-REPO.git
+    PATH: $HOME/$CIRCLE_PROJECT_REPONAME/bin:$PATH
+test:
+  override:
+    - phpunit tests
+deployment:
+  master:
+    branch: [master, edge]
+    commands:
+      - curl -sSL https://raw.githubusercontent.com/TopFloorTech/deployment-scripts/master/push-to-remote.sh | bash -s
